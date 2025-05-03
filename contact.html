@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>संपर्क करें - SpinXOI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="sticky-header">
+        <h1 class="logo">SpinXOI <span>GK</span></h1>
+        <nav>
+            <ul>
+                <li><a href="/index.html">होम</a></li>
+                <li><a href="/quiz.html">क्विज़</a></li>
+                <li><a href="/facts.html">रोचक तथ्य</a></li>
+                <li><a href="/history.html">इतिहास</a></li>
+                <li><a href="/about.html">हमारे बारे में</a></li>
+                <li class="active"><a href="/contact.html">संपर्क</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="contact-hero">
+            <div class="hero-content">
+                <h1>हमसे जुड़ें</h1>
+                <p>आपके सुझाव और प्रश्न हमारे लिए महत्वपूर्ण हैं</p>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <div class="contact-container">
+                <div class="contact-illustration">
+                    <img src="images/contact-vector.svg" alt="संपर्क इलस्ट्रेशन">
+                </div>
+                
+                <div class="contact-form-wrapper">
+                    <div class="form-header">
+                        <h2><i class="fas fa-paper-plane"></i> त्वरित संदेश भेजें</h2>
+                        <p>हम 24 घंटे के भीतर जवाब देते हैं</p>
+                    </div>
+                    
+                    <form class="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
+                        <div class="form-group">
+                            <label for="name"><i class="fas fa-user"></i> आपका नाम</label>
+                            <input type="text" id="name" name="name" placeholder="अपना पूरा नाम लिखें" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email"><i class="fas fa-envelope"></i> ईमेल पता</label>
+                            <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message"><i class="fas fa-comment-dots"></i> संदेश</label>
+                            <textarea id="message" name="message" placeholder="अपना संदेश विस्तार से लिखें..." rows="6" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <span>संदेश भेजें</span>
+                            <div class="submit-loader">
+                                <div class="loader-dot"></div>
+                                <div class="loader-dot"></div>
+                                <div class="loader-dot"></div>
+                            </div>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="modern-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>SpinXOI GK</h3>
+                <p>ज्ञान का सरल स्रोत</p>
+            </div>
+            <div class="footer-links">
+                <h4>त्वरित लिंक</h4>
+                <ul>
+                    <li><a href="/privacy.html">गोपनीयता नीति</a></li>
+                    <li><a href="/terms.html">नियम एवं शर्तें</a></li>
+                    <li><a href="/faq.html">सामान्य प्रश्न</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>सोशल मीडिया</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 SpinXOI - सर्वाधिकार सुरक्षित</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

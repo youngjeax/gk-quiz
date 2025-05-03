@@ -294,3 +294,10 @@ window.onload = function() {
     showDailyFact();
     initializeAnimations();
 };
+
+// FAQ Toggle Functionality
+document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.question').addEventListener('click', () => {
+        item.classList.toggle('active');
+    });
+});
