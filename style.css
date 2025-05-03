@@ -1,0 +1,223 @@
+/* Base Styles */
+:root {
+    --home-color: #FF6B6B;
+    --quiz-color: #4ECDC4;
+    --facts-color: #2ECC71;
+    --history-color: #A66CFF;
+    --dark-bg: #2c3e50;
+    --text-light: #ffffff;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Nirmala UI', Arial, sans-serif;
+    background: #f8f9fa;
+    line-height: 1.6;
+  }
+  
+  /* Header Styles */
+  header {
+    background: linear-gradient(135deg, var(--dark-bg), #34495e);
+    padding: 1rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  
+  .logo {
+    font-size: 2.5rem;
+    text-align: center;
+    background: linear-gradient(45deg, var(--home-color), var(--quiz-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  /* Navigation Styles */
+  nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem;
+    list-style: none;
+  }
+  
+  nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+  }
+  
+  nav ul li:nth-child(1) a {
+    background: linear-gradient(45deg, var(--home-color), #FF8E53);
+  }
+  nav ul li:nth-child(2) a {
+    background: linear-gradient(45deg, var(--quiz-color), #45B7AF);
+  }
+  nav ul li:nth-child(3) a {
+    background: linear-gradient(45deg, var(--facts-color), #27AE60);
+  }
+  nav ul li:nth-child(4) a {
+    background: linear-gradient(45deg, var(--history-color), #8A4FFF);
+  }
+  
+  nav a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  
+  nav ul li.active a {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transform: scale(1.05);
+    border: 2px solid var(--text-light);
+  }
+  
+  /* Main Content Sections */
+  .gk-hero {
+    background: linear-gradient(rgba(44,62,80,0.9), rgba(52,152,219,0.9)),
+                url('https://picsum.photos/1600/600');
+    background-size: cover;
+    color: var(--text-light);
+    padding: 4rem 1rem;
+    text-align: center;
+  }
+  
+  .gk-section {
+    padding: 3rem 1rem;
+    border-radius: 15px;
+    margin: 2rem 0;
+  }
+  
+  #quiz { background: rgba(78, 205, 196, 0.1); }
+  #facts { background: rgba(46, 204, 113, 0.1); }
+  #history { background: rgba(166, 108, 255, 0.1); }
+  
+  /* Quiz Styles */
+  .quiz-card {
+    background: var(--text-light);
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  
+  .options {
+    display: grid;
+    gap: 1rem;
+  }
+  
+  .option {
+    padding: 1rem;
+    border: 2px solid var(--quiz-color);
+    border-radius: 25px;
+    background: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .option:hover {
+    background: var(--quiz-color);
+    color: var(--text-light);
+    transform: translateY(-2px);
+  }
+  
+  /* Facts Grid Styles */
+.fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.fact-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    border-left: 5px solid #e74c3c;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.fact-card:hover {
+    transform: translateY(-5px);
+}
+
+.fact-card h3 {
+    color: #e74c3c;
+    margin-bottom: 1rem;
+}
+  
+  /* Quick Links */
+  .quick-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+  }
+  
+  .link-card {
+    background: var(--text-light);
+    padding: 2rem;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  
+  .link-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Utility Styles */
+  .scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: 15px;
+    border: none;
+    border-radius: 50%;
+    background: var(--quiz-color);
+    color: var(--text-light);
+    cursor: pointer;
+    display: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  }
+  
+  @media (max-width: 768px) {
+    .gk-hero h2 { font-size: 1.8rem; }
+    .quiz-card { margin: 1rem; padding: 1rem; }
+    nav ul { flex-direction: column; gap: 1rem; }
+  }
+
+  /* Footer Styles */
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background: #34495e;
+    color: white;
+    margin-top: auto; /* यदि आप फुटर को नीचे चिपकाना चाहें तो */
+    width: 100%;
+}
+
+footer {
+    /* अन्य स्टाइल्स */
+    text-align: center; /* यह लाइन जोड़ें */
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
