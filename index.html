@@ -1,55 +1,96 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="hi" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpinXOI - सामान्य ज्ञान</title>
+    <meta name="description" content="SpinXOI GK - सामान्य ज्ञान, रोचक तथ्य और दैनिक क्विज़. भारतीय इतिहास, विज्ञान और सामयिकी पर नई जानकारी प्रतिदिन सीखें.">
+    <meta name="keywords" content="सामान्य ज्ञान, GK in Hindi, रोचक तथ्य, दैनिक क्विज़, इतिहास, प्रतियोगी परीक्षा तैयारी">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="SpinXOI GK - सामान्य ज्ञान और रोचक तथ्य">
+    <meta property="og:description" content="भारतीय इतिहास, विज्ञान और सामयिकी पर नई जानकारी प्रतिदिन सीखें">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://example.com/og-image.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://example.com/facts.html">
+    
+    <title>SpinXOI GK - सामान्य ज्ञान | रोचक तथ्य | दैनिक क्विज़</title>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        "name": "SpinXOI GK",
+        "description": "सामान्य ज्ञान और शिक्षण संसाधन",
+        "url": "https://example.com",
+        "logo": "https://example.com/logo.png"
+    }
+    </script>
+
     <link rel="stylesheet" href="style.css">
+    <link rel="preload" href="script.js" as="script">
 </head>
 <body>
-    <header>
-        <h1 class="logo">SpinXOI <span>GK</span></h1>
-        <nav>
+    <header role="banner">
+        <h1 class="logo" aria-label="स्पिन एक्स ओ आई जीके">SpinXOI <span>GK</span></h1>
+        <nav role="navigation" aria-label="मुख्य नेविगेशन">
             <ul>
-                <li><a href="/index.html">होम</a></li>
-                <li><a href="/quiz.html">क्विज़</a></li>
-                <li class="active"><a href="/facts.html">रोचक तथ्य</a></li>
-                <li><a href="/history.html">इतिहास</a></li>
-                <li class="active"><a href="/about.html">हमारे बारे में</a></li>
-                <li><a href="/contact.html">संपर्क</a></li>
+                <li><a href="index.html" class="nav-link">होम</a></li>
+                <li><a href="quiz.html" class="nav-link">क्विज़</a></li>
+                <li class="active"><a href="facts.html" class="nav-link">रोचक तथ्य</a></li>
+                <li><a href="history.html" class="nav-link">इतिहास</a></li>
+                <li><a href="about.html" class="nav-link">हमारे बारे में</a></li>
+                <li><a href="contact.html" class="nav-link">संपर्क</a></li>
             </ul>
         </nav>
-        
     </header>
 
-    <section class="gk-hero">
-        <div class="hero-content">
-            <h2>रोजाना सीखें नया ज्ञान!</h2>
-            <p>दिलचस्प तथ्य, क्विज़ और जानकारी का खजाना</p>
-        </div>
-    </section>
-
-    <main>
-        <section class="quick-links">
-            <div class="link-card" onclick="location.href='quiz.html'">
-                <h3>क्विज़ खेलें</h3>
-                <p>अपना ज्ञान परखें</p>
-            </div>
-            <div class="link-card" onclick="location.href='facts.html'">
-                <h3>रोचक तथ्य</h3>
-                <p>नई जानकारी खोजें</p>
-            </div>
-            <div class="link-card" onclick="location.href='history.html'">
-                <h3>इतिहास</h3>
-                <p>ऐतिहासिक जानकारी</p>
+    <main role="main">
+        <section class="gk-hero" aria-labelledby="heroHeading">
+            <div class="hero-content">
+                <h2 id="heroHeading">रोजाना सीखें नया ज्ञान!</h2>
+                <p>भारतीय इतिहास, विज्ञान और सामयिकी पर 5000+ रोचक तथ्य</p>
+                <img src="learning-icon.png" alt="शिक्षण संसाधन" loading="lazy">
             </div>
         </section>
+
+        <section class="quick-links" aria-labelledby="quickLinksHeading">
+            <h3 id="quickLinksHeading" class="visually-hidden">त्वरित लिंक्स</h3>
+            <div class="link-card" role="button" tabindex="0" onclick="location.href='quiz.html'">
+                <h4>क्विज़ खेलें</h4>
+                <p>प्रतिदिन नए प्रश्नों के साथ अपना ज्ञान परखें</p>
+            </div>
+            <!-- अन्य लिंक कार्ड्स -->
+        </section>
+
+        <article class="content-section">
+            <h2>नवीनतम रोचक तथ्य</h2>
+            <div class="breadcrumb" aria-label="ब्रैडक्रम्ब">
+                <a href="index.html">होम</a> &gt; <span>रोचक तथ्य</span>
+            </div>
+            <section itemscope itemtype="https://schema.org/Article">
+                <h3 itemprop="name">भारत के बारे में 5 अद्भुत तथ्य</h3>
+                <p itemprop="description">जानिए भारत के इतिहास से जुड़े कुछ रोचक पहलू...</p>
+            </section>
+        </article>
     </main>
 
-    <footer>
-        <p>© 2025 SpinXOI - प्रतिदिन नया सीखें</p>
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <p>&copy; <span id="currentYear"></span> SpinXOI - प्रतिदिन नया सीखें</p>
+            <nav aria-label="फुटर लिंक्स">
+                <a href="privacy.html">गोपनीयता नीति</a> |
+                <a href="terms.html">उपयोग की शर्तें</a>
+            </nav>
+        </div>
     </footer>
-    
-    <script src="script.js"></script>
+
+    <script>
+        // वर्ष अपडेट करने के लिए स्क्रिप्ट
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+    <script src="script.js" defer></script>
 </body>
 </html>
