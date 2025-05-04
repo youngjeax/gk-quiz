@@ -1,36 +1,40 @@
 <!DOCTYPE html>
-<html lang="hi" dir="ltr">
+<html lang="hi" dir="ltr" itemscope itemtype="http://schema.org/WebPage">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SpinXOI GK - प्रतिदिन नया सामान्य ज्ञान सीखें। रोचक तथ्य, ऐतिहासिक जानकारी और इंटरएक्टिव क्विज़ के माध्यम से ज्ञानवर्धन करें।">
-    <meta name="keywords" content="सामान्य ज्ञान, GK in Hindi, दैनिक क्विज़, रोचक तथ्य, भारतीय इतिहास, प्रतियोगी परीक्षा तैयारी">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="SpinXOI GK - सामान्य ज्ञान का भंडार">
-    <meta property="og:description" content="प्रतिदिन नए रोचक तथ्य और क्विज़ के साथ अपना ज्ञान बढ़ाएं">
+    <meta name="description" content="SpinXOI - भारत का सर्वश्रेष्ठ सामान्य ज्ञान प्लेटफॉर्म। रोजाना नए क्विज़, रोचक तथ्य और ऐतिहासिक जानकारी हिंदी में सीखें।">
+    <meta name="keywords" content="सामान्य ज्ञान, GK in Hindi, दैनिक क्विज़, रोचक तथ्य, भारतीय इतिहास, प्रतियोगी परीक्षा">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="SpinXOI GK - सामान्य ज्ञान का #1 हिंदी संसाधन">
+    <meta property="og:description" content="5000+ क्विज़ प्रश्न और रोचक तथ्यों का विशाल संग्रह">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="hi_IN">
-    <link rel="canonical" href="https://example.com/">
+    <link rel="canonical" href="https://www.spinxoi.com/">
+    
+    <!-- Schema Markup -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "SpinXOI GK",
-        "url": "https://example.com/",
+        "url": "https://www.spinxoi.com/",
         "potentialAction": {
             "@type": "SearchAction",
-            "target": "{search_term_string}",
+            "target": "https://www.spinxoi.com/search?q={search_term_string}",
             "query-input": "required name=search_term_string"
         }
     }
     </script>
-    <title>SpinXOI GK - सामान्य ज्ञान | दैनिक क्विज़ | रोचक तथ्य</title>
+    
+    <title>SpinXOI GK - सामान्य ज्ञान | रोजाना क्विज़ | हिंदी में तथ्य</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body itemscope itemtype="https://schema.org/WebPage">
+
+<body>
     <header itemprop="headline">
-        <h1 class="logo" itemprop="name">SpinXOI <span itemprop="alternateName">GK</span></h1>
-        <nav itemscope itemtype="https://schema.org/SiteNavigationElement">
+        <h1 class="logo" itemprop="name">SpinXOI <span itemprop="alternativeHeadline">GK</span></h1>
+        <nav aria-label="मुख्य मेनू" itemscope itemtype="http://schema.org/SiteNavigationElement">
             <ul>
                 <li itemprop="name"><a href="index.html" itemprop="url">होम</a></li>
                 <li itemprop="name"><a href="quiz.html" itemprop="url">क्विज़</a></li>
@@ -42,37 +46,37 @@
         </nav>
     </header>
 
-    <section class="gk-hero" itemscope itemtype="https://schema.org/WPHeader">
+    <section class="gk-hero" itemscope itemtype="http://schema.org/WPHeader">
         <div class="hero-content">
             <h2 itemprop="headline">रोजाना सीखें नया ज्ञान!</h2>
             <p itemprop="description">दिलचस्प तथ्य, क्विज़ और जानकारी का खजाना</p>
         </div>
     </section>
 
-    <main itemprop="mainContentOfPage">
-        <section class="quick-links" itemscope itemtype="https://schema.org/ItemList">
-            <div class="link-card" onclick="location.href='quiz.html'" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <main itemscope itemtype="http://schema.org/ItemList">
+        <section class="quick-links">
+            <div class="link-card" onclick="location.href='quiz.html'" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <meta itemprop="position" content="1">
                 <h3 itemprop="name">क्विज़ खेलें</h3>
                 <p itemprop="description">अपना ज्ञान परखें</p>
-                <meta itemprop="position" content="1">
             </div>
-            <div class="link-card" onclick="location.href='facts.html'" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <div class="link-card" onclick="location.href='facts.html'" itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+                <meta itemprop="position" content="2">
                 <h3 itemprop="name">रोचक तथ्य</h3>
                 <p itemprop="description">नई जानकारी खोजें</p>
-                <meta itemprop="position" content="2">
             </div>
-            <div class="link-card" onclick="location.href='history.html'" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <div class="link-card" onclick="location.href='history.html'" itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+                <meta itemprop="position" content="3">
                 <h3 itemprop="name">इतिहास</h3>
                 <p itemprop="description">ऐतिहासिक जानकारी</p>
-                <meta itemprop="position" content="3">
             </div>
         </section>
     </main>
 
-    <footer itemprop="footer">
-        <p>© <span itemprop="copyrightYear">2025</span> <span itemprop="copyrightHolder">SpinXOI</span> - प्रतिदिन नया सीखें</p>
+    <footer itemscope itemtype="http://schema.org/WPFooter">
+        <p itemprop="copyrightNotice">© <span itemprop="copyrightYear">2025</span> SpinXOI - प्रतिदिन नया सीखें</p>
     </footer>
-    
+
     <script src="script.js" defer></script>
 </body>
 </html>
