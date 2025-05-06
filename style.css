@@ -649,3 +649,15 @@ article h3 {
   margin-top: 2rem;
   text-align: center;
 }
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff; /* ya koi bhi background */
+  padding: 15px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* halka shadow */
+  z-index: 1000; /* taaki dusre elements ke upar rahe */
+}
+
