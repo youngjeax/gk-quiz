@@ -650,14 +650,79 @@ article h3 {
   text-align: center;
 }
 
+/* Header Fixes */
 header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #ffffff; /* ya koi bhi background */
-  padding: 15px 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* halka shadow */
-  z-index: 1000; /* taaki dusre elements ke upar rahe */
+  background: linear-gradient(135deg, var(--dark-bg), #34495e);
+  padding: 1rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+/* Add margin-top to main content to account for fixed header */
+main {
+  margin-top: 100px; /* Adjust based on header height */
+}
+
+/* Footer Fixes */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  background: #34495e;
+  color: white;
+  width: 100%;
+  margin-top: auto;
+}
+
+/* Ensure body is flex container */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Remove duplicate header styles */
+/* (Removed the duplicate header styles at the bottom of original code) */
+
+/* Rest of your original CSS remains unchanged */
+:root {
+    --home-color: #FF6B6B;
+    --quiz-color: #4ECDC4;
+    --facts-color: #2ECC71;
+    --history-color: #A66CFF;
+    --dark-bg: #2c3e50;
+    --text-light: #ffffff;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Nirmala UI', Arial, sans-serif;
+    background: #f8f9fa;
+    line-height: 1.6;
+  }
+  
+  /* ... (rest of your existing styles remain exactly the same) ... */
+
+/* Modern Footer Adjustments */
+.modern-footer .footer-content {
+  text-align: left; /* Reset alignment for grid content */
+}
+
+.modern-footer .footer-content > div {
+  text-align: center; /* Center individual columns */
+}
+
+@media (max-width: 768px) {
+  main {
+    margin-top: 80px; /* Smaller margin for mobile */
+  }
 }
 
