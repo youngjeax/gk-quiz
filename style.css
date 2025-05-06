@@ -97,7 +97,7 @@
   
   #quiz { background: rgba(78, 205, 196, 0.1); }
   #facts { background: rgba(46, 204, 113, 0.1); }
-  #history { background: rgba(166, 108, 255, 0.1); } 
+  #history { background: rgba(166, 108, 255, 0.1); }
   
   /* Quiz Styles */
   .quiz-card {
@@ -649,3 +649,4 @@ article h3 {
   margin-top: 2rem;
   text-align: center;
 }
+
