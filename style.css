@@ -244,6 +244,7 @@
     text-align: center;
     font-size: 1rem;
   }
+}
 
   /* Footer Styles */
 footer {
@@ -251,13 +252,12 @@ footer {
     padding: 1.5rem;
     background: #34495e;
     color: white;
-    margin-top: auto; /* यदि आप फुटर को नीचे चिपकाना चाहें तो */
+    margin-top: auto;
     width: 100%;
 }
 
 footer {
-    /* अन्य स्टाइल्स */
-    text-align: center; /* यह लाइन जोड़ें */
+    text-align: center;
 }
 
 body {
@@ -697,5 +697,3 @@ article h3 {
   margin-top: 2rem;
   text-align: center;
 }
-
-
