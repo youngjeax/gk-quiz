@@ -650,3 +650,19 @@ article h3 {
   text-align: center;
 }
 
+.btn-news {
+    background: #e53935; /* vibrant red */
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-news:hover {
+    background: #d32f2f; /* darker red on hover */
+    box-shadow: 0 0 10px rgba(229, 57, 53, 0.6);
+}
+
+
