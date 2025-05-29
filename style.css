@@ -4,6 +4,7 @@
     --quiz-color: #4ECDC4;
     --facts-color: #2ECC71;
     --history-color: #A66CFF;
+    --news-color: #e53935; /* Added news color variable */
     --dark-bg: #2c3e50;
     --text-light: #ffffff;
   }
@@ -67,6 +68,10 @@
   nav ul li:nth-child(4) a {
     background: linear-gradient(45deg, var(--history-color), #8A4FFF);
   }
+  /* Added news button in main nav */
+  nav ul li:nth-child(5) a {
+    background: linear-gradient(45deg, var(--news-color), #ff6b6b);
+  }
   
   nav a:hover {
     transform: translateY(-3px);
@@ -98,6 +103,10 @@
   #quiz { background: rgba(78, 205, 196, 0.1); }
   #facts { background: rgba(46, 204, 113, 0.1); }
   #history { background: rgba(166, 108, 255, 0.1); }
+  /* Added news section styling */
+  #news { 
+    background: rgba(229, 57, 53, 0.1); 
+  }
   
   /* Quiz Styles */
   .quiz-card {
@@ -176,6 +185,84 @@
     transform: translateY(-5px);
   }
   
+  /* News Section Styles - ADDED */
+  .news-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 20px;
+  }
+  
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .news-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+  }
+  
+  .news-image {
+    height: 200px;
+    overflow: hidden;
+  }
+  
+  .news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .news-card:hover .news-image img {
+    transform: scale(1.05);
+  }
+  
+  .news-content {
+    padding: 1.5rem;
+  }
+  
+  .news-date {
+    color: var(--news-color);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  
+  .news-title {
+    color: var(--dark-bg);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+  }
+  
+  .news-excerpt {
+    color: #666;
+    margin-bottom: 1rem;
+  }
+  
+  .read-more {
+    color: var(--news-color);
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .read-more:hover {
+    text-decoration: underline;
+  }
+  
   /* Utility Styles */
   .scroll-top {
     position: fixed;
@@ -244,7 +331,6 @@
     text-align: center;
     font-size: 1rem;
   }
-}
 
   /* Footer Styles */
 footer {
@@ -252,12 +338,13 @@ footer {
     padding: 1.5rem;
     background: #34495e;
     color: white;
-    margin-top: auto;
+    margin-top: auto; /* यदि आप फुटर को नीचे चिपकाना चाहें तो */
     width: 100%;
 }
 
 footer {
-    text-align: center;
+    /* अन्य स्टाइल्स */
+    text-align: center; /* यह लाइन जोड़ें */
 }
 
 body {
