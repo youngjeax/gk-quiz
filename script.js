@@ -3321,31 +3321,24 @@ function loadQuestion() {
  * @param {number} selectedIndex - The index of the option selected by the user.
  */
 function checkAnswer(selectedIndex) {
-    const correctIndex = shuffledQuizData[currentQuestion].correct;
+    const correctIndex = quizData[currentQuestion].correct;
     const options = document.querySelectorAll('.option');
-
-    // Disable all options to prevent multiple selections
+    
     options.forEach(option => option.disabled = true);
-
+    
     if(selectedIndex === correctIndex) {
-        options[selectedIndex].style.backgroundColor = '#2ecc71'; // Green for correct
-        score++; // Increment score if correct
+        options[selectedIndex].style.backgroundColor = '#2ecc71';
+        score++;
     } else {
-        options[selectedIndex].style.backgroundColor = '#e74c3c'; // Red for incorrect selected option
-        options[correctIndex].style.backgroundColor = '#2ecc71'; // Green for the actual correct option
+        options[selectedIndex].style.backgroundColor = '#e74c3c';
+        options[correctIndex].style.backgroundColor = '#2ecc71';
     }
 
-    // Move to the next question or show results after a short delay
     setTimeout(() => {
         currentQuestion++;
-        if (currentQuestion < shuffledQuizData.length) {
-            loadQuestion();
-        } else {
-            showFinalResults();
-        }
-    }, 1500); // 1.5 seconds delay
+        currentQuestion < quizData.length ? loadQuestion() : showFinalResults();
+    }, 1500);
 }
-
 /**
  * Displays the final quiz results, including the user's score.
  * Provides a "Play Again" button to restart the quiz.
