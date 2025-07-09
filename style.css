@@ -6,28 +6,28 @@
     --history-color: #A66CFF;
     --dark-bg: #2c3e50;
     --text-light: #ffffff;
-}
-
-* {
+  }
+  
+  * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-body {
+  }
+  
+  body {
     font-family: 'Nirmala UI', Arial, sans-serif;
     background: #f8f9fa;
     line-height: 1.6;
-}
-
-/* Header Styles */
-header {
+  }
+  
+  /* Header Styles */
+  header {
     background: linear-gradient(135deg, var(--dark-bg), #34495e);
     padding: 1rem;
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-
-.logo {
+  }
+  
+  .logo {
     font-size: 2.5rem;
     text-align: center;
     background: linear-gradient(45deg, var(--home-color), var(--quiz-color));
@@ -36,100 +36,100 @@ header {
     color: transparent;
     padding: 1rem;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-}
-
-/* Navigation Styles */
-nav ul {
+  }
+  
+  /* Navigation Styles */
+  nav ul {
     display: flex;
     justify-content: center;
     gap: 2rem;
     padding: 1rem;
     list-style: none;
-}
-
-nav a {
+  }
+  
+  nav a {
     color: var(--text-light);
     text-decoration: none;
     padding: 0.8rem 1.5rem;
     border-radius: 25px;
     transition: all 0.3s ease;
-}
-
-nav ul li:nth-child(1) a {
+  }
+  
+  nav ul li:nth-child(1) a {
     background: linear-gradient(45deg, var(--home-color), #FF8E53);
-}
-nav ul li:nth-child(2) a {
+  }
+  nav ul li:nth-child(2) a {
     background: linear-gradient(45deg, var(--quiz-color), #45B7AF);
-}
-nav ul li:nth-child(3) a {
+  }
+  nav ul li:nth-child(3) a {
     background: linear-gradient(45deg, var(--facts-color), #27AE60);
-}
-nav ul li:nth-child(4) a {
+  }
+  nav ul li:nth-child(4) a {
     background: linear-gradient(45deg, var(--history-color), #8A4FFF);
-}
-
-nav a:hover {
+  }
+  
+  nav a:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-
-nav ul li.active a {
+  }
+  
+  nav ul li.active a {
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     transform: scale(1.05);
     border: 2px solid var(--text-light);
-}
-
-/* Main Content Sections */
-.gk-hero {
+  }
+  
+  /* Main Content Sections */
+  .gk-hero {
     background: linear-gradient(rgba(44,62,80,0.9), rgba(52,152,219,0.9)),
                 url('https://picsum.photos/1600/600');
     background-size: cover;
     color: var(--text-light);
     padding: 4rem 1rem;
     text-align: center;
-}
-
-.gk-section {
+  }
+  
+  .gk-section {
     padding: 3rem 1rem;
     border-radius: 15px;
     margin: 2rem 0;
-}
-
-#quiz { background: rgba(78, 205, 196, 0.1); }
-#facts { background: rgba(46, 204, 113, 0.1); }
-#history { background: rgba(166, 108, 255, 0.1); }
-
-/* Quiz Styles */
-.quiz-card {
+  }
+  
+  #quiz { background: rgba(78, 205, 196, 0.1); }
+  #facts { background: rgba(46, 204, 113, 0.1); }
+  #history { background: rgba(166, 108, 255, 0.1); }
+  
+  /* Quiz Styles */
+  .quiz-card {
     background: var(--text-light);
     max-width: 800px;
     margin: 2rem auto;
     padding: 2rem;
     border-radius: 15px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.options {
+  }
+  
+  .options {
     display: grid;
     gap: 1rem;
-}
-
-.option {
+  }
+  
+  .option {
     padding: 1rem;
     border: 2px solid var(--quiz-color);
     border-radius: 25px;
     background: none;
     cursor: pointer;
     transition: all 0.3s ease;
-}
-
-.option:hover {
+  }
+  
+  .option:hover {
     background: var(--quiz-color);
     color: var(--text-light);
     transform: translateY(-2px);
-}
-
-/* Facts Grid Styles */
+  }
+  
+  /* Facts Grid Styles */
 .fact-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -154,30 +154,30 @@ nav ul li.active a {
     color: #e74c3c;
     margin-bottom: 1rem;
 }
-
-/* Quick Links */
-.quick-links {
+  
+  /* Quick Links */
+  .quick-links {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
     padding: 2rem;
-}
-
-.link-card {
+  }
+  
+  .link-card {
     background: var(--text-light);
     padding: 2rem;
     border-radius: 15px;
     cursor: pointer;
     transition: transform 0.3s ease;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.link-card:hover {
+  }
+  
+  .link-card:hover {
     transform: translateY(-5px);
-}
-
-/* Utility Styles */
-.scroll-top {
+  }
+  
+  /* Utility Styles */
+  .scroll-top {
     position: fixed;
     bottom: 30px;
     right: 30px;
@@ -189,26 +189,27 @@ nav ul li.active a {
     cursor: pointer;
     display: none;
     box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-}
-
-@media (max-width: 768px) {
+  }
+  
+  @media (max-width: 768px) {
     .gk-hero h2 { font-size: 1.8rem; }
     .quiz-card { margin: 1rem; padding: 1rem; }
     nav ul { flex-direction: column; gap: 1rem; }
-}
+  }
 
-/* Footer Styles */
+  /* Footer Styles */
 footer {
     text-align: center;
     padding: 1.5rem;
     background: #34495e;
     color: white;
-    margin-top: auto;
+    margin-top: auto; /* यदि आप फुटर को नीचे चिपकाना चाहें तो */
     width: 100%;
 }
 
 footer {
-    text-align: center;
+    /* अन्य स्टाइल्स */
+    text-align: center; /* यह लाइन जोड़ें */
 }
 
 body {
@@ -408,7 +409,7 @@ main {
   }
 }
 
-/* Contact Page Styling */
+/* संपर्क पेज स्टाइलिंग */
 .contact-hero {
   background: linear-gradient(135deg, #2c3e50, #3498db);
   color: white;
@@ -651,181 +652,35 @@ article h3 {
 
 /* --- CSS Variables --- */
 :root {
-    --home-color: #FF6B6B;
-    --quiz-color: #4ECDC4;
-    --facts-color: #2ECC71;
-    --history-color: #A66CFF;
-    --dark-bg: #2c3e50;
-    --text-light: #ffffff;
-    --primary-red: #FF0000;
-    --darker-red: #CC0000;
+  --home-color: #FF6B6B;
+  --quiz-color: #4ECDC4;
+  --facts-color: #2ECC71;
+  --history-color: #A66CFF; /* यह अब उपयोग नहीं होगा अगर 'ताज़ा खबरें' 4वां हो */
+  --dark-bg: #2c3e50;
+  --text-light: #ffffff;
+  --primary-red: #FF0000; /* नया वेरिएबल: चमकीला लाल */
+  --darker-red: #CC0000;  /* नया वेरिएबल: गहरा लाल */
 }
 
 /* --- Header Styles --- */
 header {
-    background: linear-gradient(135deg, var(--dark-bg), #34495e);
-    padding: 1.5rem 1rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+  background: linear-gradient(135deg, var(--dark-bg), #34495e);
+  padding: 1.5rem 1rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .logo {
-    font-size: 2.8rem;
-    text-align: center;
-    background: linear-gradient(45deg, var(--home-color), var(--quiz-color));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    padding: 0.5rem 0;
-    text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-/* Navigation Styles - Full Code */
-nav {
-  background: linear-gradient(135deg, var(--dark-bg), #34495e);
-  padding: 0.5rem 1rem;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-nav ul {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.8rem;
-  padding: 0.5rem;
-  margin: 0;
-  list-style: none;
-  flex-wrap: wrap;
-}
-
-nav li {
-  margin: 0;
-  padding: 0;
-}
-
-nav a {
-  color: var(--text-light);
-  text-decoration: none;
-  padding: 0.7rem 1.2rem;
-  border-radius: 25px;
-  transition: all 0.3s ease;
-  display: inline-block;
+  font-size: 2.8rem;
   text-align: center;
-  font-size: 0.95rem;
-  font-weight: 500;
-  white-space: nowrap;
+  background: linear-gradient(45deg, var(--home-color), var(--quiz-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding: 0.5rem 0;
+  text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
-/* Navigation Items Color Coding */
-nav ul li:nth-child(1) a { /* Home */
-  background: linear-gradient(45deg, var(--home-color), #FF8E53);
-  box-shadow: 0 2px 5px rgba(255, 107, 107, 0.3);
-}
-
-nav ul li:nth-child(2) a { /* Quiz */
-  background: linear-gradient(45deg, var(--quiz-color), #45B7AF);
-  box-shadow: 0 2px 5px rgba(78, 205, 196, 0.3);
-}
-
-nav ul li:nth-child(3) a { /* Facts */
-  background: linear-gradient(45deg, var(--facts-color), #27AE60);
-  box-shadow: 0 2px 5px rgba(46, 204, 113, 0.3);
-}
-
-nav ul li:nth-child(4) a { /* History */
-  background: linear-gradient(45deg, var(--history-color), #8A4FFF);
-  box-shadow: 0 2px 5px rgba(166, 108, 255, 0.3);
-}
-
-nav ul li:nth-child(5) a { /* About */
-  background: linear-gradient(45deg, #3498db, #2980b9);
-  box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
-}
-
-nav ul li:nth-child(6) a { /* Contact */
-  background: linear-gradient(45deg, #9b59b6, #8e44ad);
-  box-shadow: 0 2px 5px rgba(155, 89, 182, 0.3);
-}
-
-/* News Button Special Style */
-.btn-news {
-  background: linear-gradient(45deg, #FF0000, #CC0000);
-  color: var(--text-light);
-  padding: 0.7rem 1.2rem;
-  border-radius: 25px;
-  font-size: 0.95rem;
-  font-weight: 500;
-  text-decoration: none;
-  display: inline-block;
-  box-shadow: 0 2px 5px rgba(255, 0, 0, 0.3);
-  margin-left: 0.8rem;
-  transition: all 0.3s ease;
-}
-
-/* Hover Effects for All Navigation Items */
-nav a:hover,
-.btn-news:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-  filter: brightness(1.1);
-}
-
-/* Active Page Highlight */
-nav ul li.active a {
-  transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-  border: 2px solid rgba(255,255,255,0.8);
-}
-
-/* Mobile Responsive Styles */
-@media (max-width: 768px) {
-  nav ul {
-    flex-direction: column;
-    gap: 0.6rem;
-    padding: 0.5rem;
-  }
-  
-  nav a,
-  .btn-news {
-    width: 100%;
-    max-width: 250px;
-    padding: 0.8rem;
-    font-size: 1rem;
-  }
-  
-  .btn-news {
-    margin-left: 0;
-    margin-top: 0.5rem;
-  }
-}
-
-/* Tablet Responsive Styles */
-@media (min-width: 769px) and (max-width: 1024px) {
-  nav ul {
-    gap: 0.5rem;
-  }
-  
-  nav a,
-  .btn-news {
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
-  }
-}
-
-/* Desktop Large Screen Optimization */
-@media (min-width: 1200px) {
-  nav ul {
-    gap: 1.2rem;
-  }
-  
-  nav a,
-  .btn-news {
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-  }
-}
