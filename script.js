@@ -1,7 +1,9 @@
 // Common Variables
-let currentQuestion = 0;
-let score = 0;
+let currentQuestion = 0; // Tracks the index of the current question in the quiz
+let score = 0; // Stores the user's current score
+let shuffledQuizData = []; // Array to hold the shuffled quiz questions
 
+// Quiz Data: An array of objects, each representing a quiz question
 const quizData = [
     //...पहले वाले 5 प्रश्न
     {
@@ -2940,6 +2942,7 @@ const quizData = [
 // पूरा डेटासेट डाउनलोड लिंक:
 // https://example.com/quiz-data.json (उदाहरणार्थ)
 
+// Fact Categories: An array of objects for different fact categories
 const factCategories = [
     {
         category: "💡 दिलचस्प जानकारी",
@@ -3274,12 +3277,29 @@ const dailyFacts = [
     "बिल्लियाँ अपने जीवन का 70% समय सोने में बिताती हैं"
 ];
 
-// Quiz Functions
+// --- Quiz Functions ---
+
+/**
+ * Shuffles the quiz questions to provide a new order each time.
+ * It creates a copy of the original quizData and shuffles it using the Fisher-Yates algorithm.
+ */
+function shuffleQuestions() {
+    shuffledQuizData = [...quizData]; // Create a shallow copy of quizData
+    for (let i = shuffledQuizData.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledQuizData[i], shuffledQuizData[j]] = [shuffledQuizData[j], shuffledQuizData[i]]; // Swap elements
+    }
+}
+
+/**
+ * Loads and displays the current question and its options in the quiz card.
+ * Also updates the progress and score display.
+ */
 function loadQuestion() {
     const quizCard = document.querySelector('.quiz-card');
-    if(!quizCard) return;
-    
-    const questionObj = quizData[currentQuestion];
+    if(!quizCard) return; // Exit if quiz card element is not found
+
+    const questionObj = shuffledQuizData[currentQuestion];
     quizCard.innerHTML = `
         <div class="question">
             <p>${currentQuestion + 1}. ${questionObj.question}</p>
@@ -3289,53 +3309,77 @@ function loadQuestion() {
                 <button class="option" onclick="checkAnswer(${index})">${option}</button>
             `).join('')}
         </div>
-        <div class="progress">प्रश्न ${currentQuestion + 1}/${quizData.length}</div>
+        <div class="progress">प्रश्न ${currentQuestion + 1}/${shuffledQuizData.length}</div>
         <div class="score">स्कोर: ${score}</div>
     `;
 }
 
+/**
+ * Checks if the selected answer is correct.
+ * Highlights the selected option (green for correct, red for incorrect).
+ * Disables all options after a selection and moves to the next question or shows results.
+ * @param {number} selectedIndex - The index of the option selected by the user.
+ */
 function checkAnswer(selectedIndex) {
-    const correctIndex = quizData[currentQuestion].correct;
+    const correctIndex = shuffledQuizData[currentQuestion].correct;
     const options = document.querySelectorAll('.option');
-    
+
+    // Disable all options to prevent multiple selections
     options.forEach(option => option.disabled = true);
-    
+
     if(selectedIndex === correctIndex) {
-        options[selectedIndex].style.backgroundColor = '#2ecc71';
-        score++;
+        options[selectedIndex].style.backgroundColor = '#2ecc71'; // Green for correct
+        score++; // Increment score if correct
     } else {
-        options[selectedIndex].style.backgroundColor = '#e74c3c';
-        options[correctIndex].style.backgroundColor = '#2ecc71';
+        options[selectedIndex].style.backgroundColor = '#e74c3c'; // Red for incorrect selected option
+        options[correctIndex].style.backgroundColor = '#2ecc71'; // Green for the actual correct option
     }
 
+    // Move to the next question or show results after a short delay
     setTimeout(() => {
         currentQuestion++;
-        currentQuestion < quizData.length ? loadQuestion() : showFinalResults();
-    }, 1500);
+        if (currentQuestion < shuffledQuizData.length) {
+            loadQuestion();
+        } else {
+            showFinalResults();
+        }
+    }, 1500); // 1.5 seconds delay
 }
 
+/**
+ * Displays the final quiz results, including the user's score.
+ * Provides a "Play Again" button to restart the quiz.
+ */
 function showFinalResults() {
     const quizCard = document.querySelector('.quiz-card');
     if(!quizCard) return;
-    
+
     quizCard.innerHTML = `
         <h3>क्विज़ परिणाम</h3>
-        <p>आपका स्कोर: ${score}/${quizData.length}</p>
+        <p>आपका स्कोर: ${score}/${shuffledQuizData.length}</p>
         <button onclick="resetQuiz()">फिर से खेलें</button>
     `;
 }
 
+/**
+ * Resets the quiz to its initial state, shuffles questions, and loads the first question.
+ */
 function resetQuiz() {
     currentQuestion = 0;
     score = 0;
+    shuffleQuestions();
     loadQuestion();
 }
 
-// Fact Functions
+// --- Fact Functions ---
+
+/**
+ * Loads and displays the various interesting facts in a grid layout.
+ */
 function loadFacts() {
     const factGrid = document.querySelector('.fact-grid');
     if(!factGrid) return;
-    
+
     factGrid.innerHTML = factCategories.map(fact => `
         <div class="fact-card">
             <h3>${fact.category}</h3>
@@ -3344,11 +3388,14 @@ function loadFacts() {
     `).join('');
 }
 
+/**
+ * Displays a "Fact of the Day" based on the current date, ensuring a different fact each day (within the array length).
+ */
 function showDailyFact() {
-    const today = new Date().getDate();
-    const factIndex = today % dailyFacts.length;
+    const today = new Date().getDate(); // Get the current day of the month
+    const factIndex = today % dailyFacts.length; // Use modulo to cycle through facts
     const dailyFactContainer = document.getElementById('daily-fact');
-    
+
     if(dailyFactContainer) {
         dailyFactContainer.innerHTML = `
             <div class="fact-of-day">
@@ -3359,55 +3406,69 @@ function showDailyFact() {
     }
 }
 
-// Common Functions
+// --- Common Functions for UI/UX ---
+
+/**
+ * Applies initial animation styles to fact cards to make them fade in and slide up.
+ */
 function initializeAnimations() {
     const factCards = document.querySelectorAll('.fact-card');
     factCards.forEach(card => {
-        card.style.transform = 'translateY(20px)';
-        card.style.opacity = '0';
-        card.style.transition = 'all 0.5s ease';
+        card.style.transform = 'translateY(20px)'; // Start slightly below
+        card.style.opacity = '0'; // Start invisible
+        card.style.transition = 'all 0.5s ease'; // Smooth transition
     });
 
+    // Animate them into view after a short delay
     setTimeout(() => {
         factCards.forEach(card => {
-            card.style.transform = 'translateY(0)';
-            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)'; // Move to original position
+            card.style.opacity = '1'; // Become fully visible
         });
-    }, 500);
+    }, 500); // Delay before animation starts
 }
 
+/**
+ * Handles the display of the "Scroll to Top" button based on scroll position.
+ * Shows the button when scrolled down, hides it when at the top.
+ */
 function handleScroll() {
     const scrollBtn = document.querySelector('.scroll-top');
-    if(window.scrollY > 300) {
-        scrollBtn.style.display = 'block';
-    } else {
-        scrollBtn.style.display = 'none';
+    if(scrollBtn) { // Ensure the button exists before manipulating
+        if(window.scrollY > 300) { // If scrolled more than 300px
+            scrollBtn.style.display = 'flex'; // Show the button (using flex for centering)
+        } else {
+            scrollBtn.style.display = 'none'; // Hide the button
+        }
     }
 }
 
+/**
+ * Smoothly scrolls the page back to the top.
+ */
 function scrollToTop() {
     window.scrollTo({
         top: 0,
-        behavior: 'smooth'
+        behavior: 'smooth' // Smooth scrolling animation
     });
 }
 
-// Initialize App
-window.onload = function() {
-    // Common Initialization
-    document.body.innerHTML += `<button class="scroll-top" onclick="scrollToTop()">↑</button>`;
-    window.addEventListener('scroll', handleScroll);
-    
-    // Page Specific Initialization
-    loadQuestion();
-    loadFacts();
-    showDailyFact();
-    initializeAnimations();
-};
+// --- Initialize Application on Page Load ---
 
-// FAQ Toggle Functionality
-document.querySelectorAll('.faq-item').forEach(item => {
-    item.querySelector('.question').addEventListener('click', () => {
-        item.classList.toggle('active');
-    });
-});
+/**
+ * This function runs when the entire page (including all resources like images) has loaded.
+ * It sets up the quiz, loads facts, and initializes UI elements.
+ */
+window.onload = function() {
+    // Add the "Scroll to Top" button dynamically to the body
+    document.body.innerHTML += `<button class="scroll-top" onclick="scrollToTop()">↑</button>`;
+    // Add event listener for scroll to manage the scroll-to-top button visibility
+    window.addEventListener('scroll', handleScroll);
+
+    // Initialize quiz and fact sections
+    shuffleQuestions(); // Randomize quiz questions
+    loadQuestion(); // Display the first question
+    loadFacts(); // Display the static facts
+    showDailyFact(); // Display the fact of the day
+    initializeAnimations(); // Apply entrance animations to fact cards
+};
