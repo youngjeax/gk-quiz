@@ -1,14 +1,7 @@
 // Common Variables
-let currentQuestion = 0; // Tracks the index of the current question in the *current round*
-let score = 0; // Stores the user's total score
-let shuffledQuizData = []; // Array to hold the shuffled quiz questions
-const QUESTIONS_PER_ROUND = 20; // Number of questions per round (constant)
-let currentRound = 1; // Track current round
-let roundScore = 0; // Tracks score for the current round
-// Assuming quizData is defined elsewhere in your code
-const totalRounds = Math.ceil(quizData.length / QUESTIONS_PER_ROUND); // Calculate total rounds
+let currentQuestion = 0;
+let score = 0;
 
-// Quiz Data: An array of objects, each representing a quiz question
 const quizData = [
     //...पहले वाले 5 प्रश्न
     {
@@ -2947,7 +2940,6 @@ const quizData = [
 // पूरा डेटासेट डाउनलोड लिंक:
 // https://example.com/quiz-data.json (उदाहरणार्थ)
 
-// Fact Categories: An array of objects for different fact categories
 const factCategories = [
     {
         category: "💡 दिलचस्प जानकारी",
@@ -3282,63 +3274,35 @@ const dailyFacts = [
     "बिल्लियाँ अपने जीवन का 70% समय सोने में बिताती हैं"
 ];
 
-// --- Quiz Functions ---
-
-/**
- * Shuffles the quiz questions to provide a new order each time.
- * It creates a copy of the original quizData and shuffles it using the Fisher-Yates algorithm.
- */
-function shuffleQuestions() {
-    shuffledQuizData = [...quizData];
-    for (let i = shuffledQuizData.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffledQuizData[i], shuffledQuizData[j]] = [shuffledQuizData[i], shuffledQuizData[j]];
-    }
-}
-
+// Quiz Functions
 function loadQuestion() {
     const quizCard = document.querySelector('.quiz-card');
-    if (!quizCard) return;
-
-    // Calculate the overall question index for shuffledQuizData
-    const overallQuestionIndex = (currentRound - 1) * QUESTIONS_PER_ROUND + currentQuestion;
-
-    // Check if we've reached the end of all questions
-    if (overallQuestionIndex >= shuffledQuizData.length) {
-        showFinalResults();
-        return;
-    }
-
-    const questionObj = shuffledQuizData[overallQuestionIndex];
-
+    if(!quizCard) return;
+    
+    const questionObj = quizData[currentQuestion];
     quizCard.innerHTML = `
         <div class="question">
-            <p>प्रश्न ${currentQuestion + 1}/${QUESTIONS_PER_ROUND}: ${questionObj.question}</p>
+            <p>${currentQuestion + 1}. ${questionObj.question}</p>
         </div>
         <div class="options">
             ${questionObj.options.map((option, index) => `
                 <button class="option" onclick="checkAnswer(${index})">${option}</button>
             `).join('')}
         </div>
-        <div class="progress">
-            राउंड ${currentRound}/${totalRounds}
-        </div>
-        <div class="score">कुल स्कोर: ${score}</div>
+        <div class="progress">प्रश्न ${currentQuestion + 1}/${quizData.length}</div>
+        <div class="score">स्कोर: ${score}</div>
     `;
 }
 
 function checkAnswer(selectedIndex) {
-    const overallQuestionIndex = (currentRound - 1) * QUESTIONS_PER_ROUND + currentQuestion;
-    const correctIndex = shuffledQuizData[overallQuestionIndex].correct;
+    const correctIndex = quizData[currentQuestion].correct;
     const options = document.querySelectorAll('.option');
-
+    
     options.forEach(option => option.disabled = true);
-
-    if (selectedIndex === correctIndex) {
+    
+    if(selectedIndex === correctIndex) {
         options[selectedIndex].style.backgroundColor = '#2ecc71';
         score++;
-        roundScore++; // Increment round score
-        document.querySelector('.score').textContent = `कुल स्कोर: ${score}`;
     } else {
         options[selectedIndex].style.backgroundColor = '#e74c3c';
         options[correctIndex].style.backgroundColor = '#2ecc71';
@@ -3346,78 +3310,104 @@ function checkAnswer(selectedIndex) {
 
     setTimeout(() => {
         currentQuestion++;
-
-        // Check if we've completed the current round
-        if (currentQuestion < QUESTIONS_PER_ROUND && overallQuestionIndex + 1 < shuffledQuizData.length) {
-            loadQuestion();
-        } else {
-            showRoundResults();
-        }
+        currentQuestion < quizData.length ? loadQuestion() : showFinalResults();
     }, 1500);
-}
-
-function showRoundResults() {
-    const quizCard = document.querySelector('.quiz-card');
-    if (!quizCard) return;
-
-    const questionsAnsweredInRound = Math.min(QUESTIONS_PER_ROUND, shuffledQuizData.length - ((currentRound - 1) * QUESTIONS_PER_ROUND));
-
-
-    quizCard.innerHTML = `
-        <div class="results">
-            <h3>राउंड ${currentRound} परिणाम</h3>
-            <p>आपका इस राउंड का स्कोर: ${roundScore}/${questionsAnsweredInRound}</p>
-            <p>कुल स्कोर: ${score}/${Math.min(currentRound * QUESTIONS_PER_ROUND, shuffledQuizData.length)}</p>
-
-            ${currentRound < totalRounds ?
-                '<button onclick="startNextRound()">अगला राउंड शुरू करें</button>' :
-                '<button onclick="showFinalResults()">अंतिम परिणाम देखें</button>'}
-        </div>
-    `;
-}
-
-function startNextRound() {
-    currentRound++;
-    currentQuestion = 0; // Reset question counter for the new round
-    roundScore = 0; // Reset round score for the new round
-    loadQuestion();
 }
 
 function showFinalResults() {
     const quizCard = document.querySelector('.quiz-card');
-    if (!quizCard) return;
-
+    if(!quizCard) return;
+    
     quizCard.innerHTML = `
-        <div class="final-results">
-            <h3>क्विज पूर्ण हुआ!</h3>
-            <p>आपका अंतिम स्कोर: ${score}/${shuffledQuizData.length}</p>
-            <p>प्रतिशत: ${Math.round((score / shuffledQuizData.length) * 100)}%</p>
-            <button onclick="resetQuiz()">फिर से खेलें</button>
-        </div>
+        <h3>क्विज़ परिणाम</h3>
+        <p>आपका स्कोर: ${score}/${quizData.length}</p>
+        <button onclick="resetQuiz()">फिर से खेलें</button>
     `;
 }
 
 function resetQuiz() {
     currentQuestion = 0;
-    currentRound = 1;
     score = 0;
-    roundScore = 0; // Reset round score on full quiz reset
-    shuffleQuestions();
     loadQuestion();
 }
 
-// ... (बाकी फंक्शन्स जैसे loadFacts, showDailyFact आदि वही रहेंगे) ...
+// Fact Functions
+function loadFacts() {
+    const factGrid = document.querySelector('.fact-grid');
+    if(!factGrid) return;
+    
+    factGrid.innerHTML = factCategories.map(fact => `
+        <div class="fact-card">
+            <h3>${fact.category}</h3>
+            <p>${fact.content}</p>
+        </div>
+    `).join('');
+}
 
-// Initialize Application on Page Load
+function showDailyFact() {
+    const today = new Date().getDate();
+    const factIndex = today % dailyFacts.length;
+    const dailyFactContainer = document.getElementById('daily-fact');
+    
+    if(dailyFactContainer) {
+        dailyFactContainer.innerHTML = `
+            <div class="fact-of-day">
+                <h3>📆 दिन का तथ्य</h3>
+                <p>${dailyFacts[factIndex]}</p>
+            </div>
+        `;
+    }
+}
+
+// Common Functions
+function initializeAnimations() {
+    const factCards = document.querySelectorAll('.fact-card');
+    factCards.forEach(card => {
+        card.style.transform = 'translateY(20px)';
+        card.style.opacity = '0';
+        card.style.transition = 'all 0.5s ease';
+    });
+
+    setTimeout(() => {
+        factCards.forEach(card => {
+            card.style.transform = 'translateY(0)';
+            card.style.opacity = '1';
+        });
+    }, 500);
+}
+
+function handleScroll() {
+    const scrollBtn = document.querySelector('.scroll-top');
+    if(window.scrollY > 300) {
+        scrollBtn.style.display = 'block';
+    } else {
+        scrollBtn.style.display = 'none';
+    }
+}
+
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// Initialize App
 window.onload = function() {
-    // Add the "Scroll to Top" button dynamically to the body
+    // Common Initialization
     document.body.innerHTML += `<button class="scroll-top" onclick="scrollToTop()">↑</button>`;
     window.addEventListener('scroll', handleScroll);
-
-    // Initialize quiz and fact sections
-    shuffleQuestions();
+    
+    // Page Specific Initialization
     loadQuestion();
-    loadFacts(); // Assuming this function is defined elsewhere
-    showDailyFact(); // Assuming this function is defined elsewhere
-    initializeAnimations(); // Assuming this function is defined elsewhere
+    loadFacts();
+    showDailyFact();
+    initializeAnimations();
 };
+
+// FAQ Toggle Functionality
+document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.question').addEventListener('click', () => {
+        item.classList.toggle('active');
+    });
+});
