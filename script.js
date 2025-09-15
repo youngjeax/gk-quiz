@@ -1,6 +1,9 @@
 // Common Variables
 let currentQuestion = 0;
 let score = 0;
+let autoRotateInterval;
+let rotationEnabled = false;
+const rotationTime = 10000; // 10 seconds per question
 
 const quizData = [
     //...पहले वाले 5 प्रश्न
@@ -3525,6 +3528,11 @@ function loadQuestion() {
     const quizCard = document.querySelector('.quiz-card');
     if(!quizCard) return;
     
+    if (currentQuestion >= quizData.length) {
+        showFinalResults();
+        return;
+    }
+    
     const questionObj = quizData[currentQuestion];
     quizCard.innerHTML = `
         <div class="question">
@@ -3535,9 +3543,91 @@ function loadQuestion() {
                 <button class="option" onclick="checkAnswer(${index})">${option}</button>
             `).join('')}
         </div>
-        <div class="progress">प्रश्न ${currentQuestion + 1}/${quizData.length}</div>
-        <div class="score">स्कोर: ${score}</div>
+        <div class="quiz-controls">
+            <div class="progress">प्रश्न ${currentQuestion + 1}/${quizData.length}</div>
+            <div class="score">स्कोर: ${score}</div>
+            <div class="auto-rotate-controls">
+                <button onclick="toggleAutoRotate()" class="rotate-btn">
+                    ${rotationEnabled ? '⏸️ ऑटो रोटेशन रोकें' : '▶️ ऑटो रोटेशन शुरू करें'}
+                </button>
+                ${rotationEnabled ? `<div class="timer">अगला प्रश्न: <span id="time-left">${timeLeft}</span>s</div>` : ''}
+            </div>
+        </div>
     `;
+    
+    // Reset timer if rotation is enabled
+    if (rotationEnabled) {
+        resetAutoRotateTimer();
+    }
+}
+
+function toggleAutoRotate() {
+    rotationEnabled = !rotationEnabled;
+    
+    if (rotationEnabled) {
+        startAutoRotate();
+    } else {
+        stopAutoRotate();
+    }
+    
+    // Update UI
+    loadQuestion();
+}
+
+function startAutoRotate() {
+    stopAutoRotate();
+    timeLeft = rotationTime / 1000;
+    updateTimerDisplay();
+    
+    // Timer for display
+    const timerInterval = setInterval(() => {
+        if (!rotationEnabled) {
+            clearInterval(timerInterval);
+            return;
+        }
+        timeLeft--;
+        updateTimerDisplay();
+        
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+        }
+    }, 1000);
+    
+    // Main rotation interval
+    autoRotateInterval = setInterval(() => {
+        nextQuestion();
+    }, rotationTime);
+}
+
+function stopAutoRotate() {
+    if (autoRotateInterval) {
+        clearInterval(autoRotateInterval);
+        autoRotateInterval = null;
+    }
+}
+
+function updateTimerDisplay() {
+    const timeElement = document.getElementById('time-left');
+    if (timeElement) {
+        timeElement.textContent = timeLeft;
+    }
+}
+
+function resetAutoRotateTimer() {
+    if (rotationEnabled) {
+        stopAutoRotate();
+        startAutoRotate();
+    }
+}
+
+function nextQuestion() {
+    currentQuestion++;
+    if (currentQuestion >= quizData.length) {
+        stopAutoRotate();
+        showFinalResults();
+    } else {
+        loadQuestion();
+    }
 }
 
 function checkAnswer(selectedIndex) {
@@ -3554,9 +3644,11 @@ function checkAnswer(selectedIndex) {
         options[correctIndex].style.backgroundColor = '#2ecc71';
     }
 
+    // Reset rotation timer when user answers
+    resetAutoRotateTimer();
+
     setTimeout(() => {
-        currentQuestion++;
-        currentQuestion < quizData.length ? loadQuestion() : showFinalResults();
+        nextQuestion();
     }, 1500);
 }
 
@@ -3565,15 +3657,19 @@ function showFinalResults() {
     if(!quizCard) return;
     
     quizCard.innerHTML = `
-        <h3>क्विज़ परिणाम</h3>
-        <p>आपका स्कोर: ${score}/${quizData.length}</p>
-        <button onclick="resetQuiz()">फिर से खेलें</button>
+        <div class="quiz-results">
+            <h3>क्विज़ परिणाम</h3>
+            <p>आपका स्कोर: ${score}/${quizData.length}</p>
+            <button onclick="resetQuiz()" class="play-again-btn">फिर से खेलें</button>
+        </div>
     `;
 }
 
 function resetQuiz() {
     currentQuestion = 0;
     score = 0;
+    rotationEnabled = false;
+    stopAutoRotate();
     loadQuestion();
 }
 
@@ -3591,23 +3687,25 @@ function loadFacts() {
 }
 
 function showDailyFact() {
+    const dailyFactContainer = document.getElementById('daily-fact');
+    if(!dailyFactContainer) return;
+    
     const today = new Date().getDate();
     const factIndex = today % dailyFacts.length;
-    const dailyFactContainer = document.getElementById('daily-fact');
     
-    if(dailyFactContainer) {
-        dailyFactContainer.innerHTML = `
-            <div class="fact-of-day">
-                <h3>📆 दिन का तथ्य</h3>
-                <p>${dailyFacts[factIndex]}</p>
-            </div>
-        `;
-    }
+    dailyFactContainer.innerHTML = `
+        <div class="fact-of-day">
+            <h3>📆 दिन का तथ्य</h3>
+            <p>${dailyFacts[factIndex]}</p>
+        </div>
+    `;
 }
 
 // Common Functions
 function initializeAnimations() {
     const factCards = document.querySelectorAll('.fact-card');
+    if (factCards.length === 0) return;
+    
     factCards.forEach(card => {
         card.style.transform = 'translateY(20px)';
         card.style.opacity = '0';
@@ -3624,6 +3722,8 @@ function initializeAnimations() {
 
 function handleScroll() {
     const scrollBtn = document.querySelector('.scroll-top');
+    if (!scrollBtn) return;
+    
     if(window.scrollY > 300) {
         scrollBtn.style.display = 'block';
     } else {
@@ -3638,22 +3738,101 @@ function scrollToTop() {
     });
 }
 
-// Initialize App
-window.onload = function() {
-    // Common Initialization
-    document.body.innerHTML += `<button class="scroll-top" onclick="scrollToTop()">↑</button>`;
+// Initialize only what's needed based on page content
+function initializePage() {
+    // Create scroll button if it doesn't exist
+    if (!document.querySelector('.scroll-top')) {
+        const scrollBtn = document.createElement('button');
+        scrollBtn.className = 'scroll-top';
+        scrollBtn.innerHTML = '↑';
+        scrollBtn.onclick = scrollToTop;
+        document.body.appendChild(scrollBtn);
+    }
+    
     window.addEventListener('scroll', handleScroll);
     
-    // Page Specific Initialization
-    loadQuestion();
-    loadFacts();
-    showDailyFact();
+    // Initialize only the components that exist on the page
+    if (document.querySelector('.quiz-card')) {
+        loadQuestion();
+    }
+    
+    if (document.querySelector('.fact-grid')) {
+        loadFacts();
+    }
+    
+    if (document.getElementById('daily-fact')) {
+        showDailyFact();
+    }
+    
     initializeAnimations();
-};
+}
 
-// FAQ Toggle Functionality
-document.querySelectorAll('.faq-item').forEach(item => {
-    item.querySelector('.question').addEventListener('click', () => {
-        item.classList.toggle('active');
-    });
-});
+// Initialize when page loads
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializePage);
+} else {
+    initializePage();
+}
+
+// Add CSS for new elements
+const style = document.createElement('style');
+style.textContent = `
+    .quiz-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .auto-rotate-controls {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .rotate-btn {
+        padding: 8px 15px;
+        background: #3498db;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    .timer {
+        font-weight: bold;
+        color: #e74c3c;
+    }
+    
+    .scroll-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 15px;
+        background: #3498db;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        z-index: 1000;
+    }
+    
+    .play-again-btn {
+        padding: 10px 20px;
+        background: #2ecc71;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 15px;
+    }
+    
+    .quiz-results {
+        text-align: center;
+        padding: 20px;
+    }
+`;
+document.head.appendChild(style);
