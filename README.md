@@ -29,3 +29,13 @@
 | Hosting  | GitHub Pages / Netlify |
 | Language | हिंदी |
 | Future Backend | Node.js / Firebase | 
+
+## 👤 Author
+**Developed by:** Narendra Kumar  
+📧 spinxoiofficial@gmail.com  
+🌐 [https://spinxoi.com](https://spinxoi.com)
+
+---
+
+## 💖 Support
+अगर आपको यह प्रोजेक्ट पसंद आया तो ⭐ GitHub पर Star ज़रूर करें!
