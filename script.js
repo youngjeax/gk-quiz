@@ -1,6 +1,7 @@
 // Common Variables
 let currentQuestion = 0;
 let score = 0;
+let autoMode = true;
 
 const quizData = [
     //...पहले वाले 5 प्रश्न
