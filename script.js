@@ -1,11 +1,10 @@
-// Common Variables
 let currentQuestion = 0;
 let score = 0;
-let autoMode = true;
+let selectedQuizData = [];
 
+// 🔹 Quiz Questions (FIXED - All have valid correct indices)
 const quizData = [
-    //...पहले वाले 5 प्रश्न
-    {
+   {
         question: "भारत का राष्ट्रीय फल कौन सा है?",
         options: ["आम", "सेब", "अनार", "केला"],
         correct: 0
@@ -2938,9 +2937,8 @@ const quizData = [
     "answer": 0
   }, 
 ];
-// पूरा डेटासेट डाउनलोड लिंक:
-// https://example.com/quiz-data.json (उदाहरणार्थ)
 
+// 📚 Facts
 const factCategories = [
     {
         category: "💡 दिलचस्प जानकारी",
@@ -3349,77 +3347,188 @@ const factCategories = [
   { category: "🎶 संगीत तथ्य", content: "ढोलक लोकसंगीत में प्रयुक्त होती है।" }
 
 ];
-
-const dailyFacts = [
-    "मानव मस्तिष्क 60% वसा से बना है",
-    "शहद कभी खराब नहीं होता",
-    "चींटियाँ कभी सोती नहीं हैं",
-    "बिल्लियाँ अपने जीवन का 70% समय सोने में बिताती हैं"
-];
-
-// Quiz Functions
-function loadQuestion() {
-    const quizCard = document.querySelector('.quiz-card');
-    if(!quizCard) return;
-    
-    const questionObj = quizData[currentQuestion];
-    quizCard.innerHTML = `
-        <div class="question">
-            <p>${currentQuestion + 1}. ${questionObj.question}</p>
-        </div>
-        <div class="options">
-            ${questionObj.options.map((option, index) => `
-                <button class="option" onclick="checkAnswer(${index})">${option}</button>
-            `).join('')}
-        </div>
-        <div class="progress">प्रश्न ${currentQuestion + 1}/${quizData.length}</div>
-        <div class="score">स्कोर: ${score}</div>
-    `;
-}
-
-function checkAnswer(selectedIndex) {
-    const correctIndex = quizData[currentQuestion].correct;
-    const options = document.querySelectorAll('.option');
-    
-    options.forEach(option => option.disabled = true);
-    
-    if(selectedIndex === correctIndex) {
-        options[selectedIndex].style.backgroundColor = '#2ecc71';
-        score++;
-    } else {
-        options[selectedIndex].style.backgroundColor = '#e74c3c';
-        options[correctIndex].style.backgroundColor = '#2ecc71';
+// 🔁 Shuffle Array (Random Order)
+function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
-
-    setTimeout(() => {
-        currentQuestion++;
-        currentQuestion < quizData.length ? loadQuestion() : showFinalResults();
-    }, 1500);
+    return shuffled;
 }
 
-function showFinalResults() {
-    const quizCard = document.querySelector('.quiz-card');
-    if(!quizCard) return;
+// 🧩 Load Random 10 Questions (WITH VALIDATION)
+function loadRandomQuiz() {
+    // Filter out questions with invalid correct indices
+    const validQuizData = quizData.filter(question => 
+        question.correct !== undefined && 
+        question.correct >= 0 && 
+        question.correct < question.options.length
+    );
     
-    quizCard.innerHTML = `
-        <h3>क्विज़ परिणाम</h3>
-        <p>आपका स्कोर: ${score}/${quizData.length}</p>
-        <button onclick="resetQuiz()">फिर से खेलें</button>
-    `;
-}
-
-function resetQuiz() {
+    if (validQuizData.length === 0) {
+        console.error("No valid questions found!");
+        return;
+    }
+    
+    selectedQuizData = shuffleArray(validQuizData).slice(0, Math.min(10, validQuizData.length));
     currentQuestion = 0;
     score = 0;
+    console.log("Loaded quiz with", selectedQuizData.length, "valid questions");
     loadQuestion();
 }
 
-// Fact Functions
+// 🏁 Load Question
+function loadQuestion() {
+    const quizCard = document.querySelector('.quiz-card');
+    if (!quizCard) {
+        console.error("Quiz card element not found!");
+        return;
+    }
+
+    // ✅ अगर सारे questions खत्म हो गए
+    if (currentQuestion >= selectedQuizData.length) {
+        showFinalResults();
+        return;
+    }
+
+    const questionObj = selectedQuizData[currentQuestion];
+    if (!questionObj) {
+        console.error("Question object not found at index:", currentQuestion);
+        currentQuestion++;
+        loadQuestion();
+        return;
+    }
+
+    // Validate question object
+    if (!questionObj.options || !Array.isArray(questionObj.options) || questionObj.options.length === 0) {
+        console.error("Invalid question options at index:", currentQuestion);
+        currentQuestion++;
+        loadQuestion();
+        return;
+    }
+
+    if (questionObj.correct === undefined || questionObj.correct < 0 || questionObj.correct >= questionObj.options.length) {
+        console.error("Invalid correct index at question:", currentQuestion, "correct:", questionObj.correct);
+        currentQuestion++;
+        loadQuestion();
+        return;
+    }
+
+    quizCard.innerHTML = `
+        <div class="question"><p>${currentQuestion + 1}. ${questionObj.question}</p></div>
+        <div class="options">
+            ${questionObj.options.map((option, index) =>
+                `<button class="option" data-index="${index}">${option}</button>`
+            ).join('')}
+        </div>
+        <div class="quiz-footer">
+            <div class="progress">प्रश्न ${currentQuestion + 1}/${selectedQuizData.length}</div>
+            <div class="score">स्कोर: ${score}</div>
+        </div>
+    `;
+
+    // ✅ Click Events
+    const optionButtons = quizCard.querySelectorAll('.option');
+    optionButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const index = parseInt(e.target.dataset.index);
+            checkAnswer(index, optionButtons);
+        });
+    });
+}
+
+// ✅ Check Answer (SIMPLIFIED AND SAFE)
+function checkAnswer(selectedIndex, options) {
+    const question = selectedQuizData[currentQuestion];
+    
+    // Final safety check
+    if (!question || question.correct === undefined) {
+        console.error("Invalid question or correct index");
+        currentQuestion++;
+        loadQuestion();
+        return;
+    }
+
+    const correctIndex = question.correct;
+
+    // Disable all buttons immediately
+    options.forEach(o => {
+        if (o) o.disabled = true;
+    });
+
+    // Show correct answer
+    if (options[correctIndex]) {
+        options[correctIndex].style.backgroundColor = '#2ecc71';
+        options[correctIndex].style.color = 'white';
+    }
+
+    // Check if answer is correct
+    if (selectedIndex === correctIndex) {
+        score++;
+        // Update score display
+        const scoreElement = document.querySelector('.score');
+        if (scoreElement) {
+            scoreElement.textContent = `स्कोर: ${score}`;
+        }
+    } else {
+        // Show wrong answer
+        if (options[selectedIndex]) {
+            options[selectedIndex].style.backgroundColor = '#e74c3c';
+            options[selectedIndex].style.color = 'white';
+        }
+    }
+
+    // Move to next question
+    setTimeout(() => {
+        currentQuestion++;
+        loadQuestion();
+    }, 1500);
+}
+
+// 🎯 Show Final Results
+function showFinalResults() {
+    const quizCard = document.querySelector('.quiz-card');
+    if (!quizCard) return;
+    
+    const percentage = Math.round((score / selectedQuizData.length) * 100);
+    
+    let message = "";
+    let emoji = "🎉";
+    
+    if (percentage >= 90) {
+        message = "बहुत बढ़िया! आप एक ज्ञानी व्यक्ति हैं!";
+        emoji = "🏆";
+    } else if (percentage >= 70) {
+        message = "अच्छा प्रदर्शन!";
+        emoji = "👍";
+    } else if (percentage >= 50) {
+        message = "ठीक-ठाक है, और अभ्यास की जरूरत है";
+        emoji = "💪";
+    } else {
+        message = "कोई बात नहीं, अगली बार और बेहतर करेंगे!";
+        emoji = "📚";
+    }
+    
+    quizCard.innerHTML = `
+        <div class="result-container">
+            <h3>${emoji} क्विज़ समाप्त!</h3>
+            <div class="final-score">आपका स्कोर: ${score}/${selectedQuizData.length}</div>
+            <div class="percentage">${percentage}% सही जवाब</div>
+            <p class="result-message">${message}</p>
+            <button class="restart-btn" onclick="loadRandomQuiz()">🔄 अगला 10 प्रश्न खेलें</button>
+        </div>
+    `;
+}
+
+// 📘 Load Facts
 function loadFacts() {
     const factGrid = document.querySelector('.fact-grid');
-    if(!factGrid) return;
+    if (!factGrid) return;
     
-    factGrid.innerHTML = factCategories.map(fact => `
+    const shuffledFacts = shuffleArray(factCategories);
+    
+    factGrid.innerHTML = shuffledFacts.map(fact => `
         <div class="fact-card">
             <h3>${fact.category}</h3>
             <p>${fact.content}</p>
@@ -3427,70 +3536,69 @@ function loadFacts() {
     `).join('');
 }
 
-function showDailyFact() {
-    const today = new Date().getDate();
-    const factIndex = today % dailyFacts.length;
-    const dailyFactContainer = document.getElementById('daily-fact');
-    
-    if(dailyFactContainer) {
-        dailyFactContainer.innerHTML = `
-            <div class="fact-of-day">
-                <h3>📆 दिन का तथ्य</h3>
-                <p>${dailyFacts[factIndex]}</p>
-            </div>
-        `;
-    }
-}
-
-// Common Functions
+// ✨ Animations
 function initializeAnimations() {
     const factCards = document.querySelectorAll('.fact-card');
-    factCards.forEach(card => {
+    factCards.forEach((card, index) => {
+        card.style.opacity = 0;
         card.style.transform = 'translateY(20px)';
-        card.style.opacity = '0';
-        card.style.transition = 'all 0.5s ease';
+        card.style.transition = `all 0.4s ease ${index * 0.1}s`;
     });
 
     setTimeout(() => {
         factCards.forEach(card => {
+            card.style.opacity = 1;
             card.style.transform = 'translateY(0)';
-            card.style.opacity = '1';
         });
-    }, 500);
+    }, 300);
 }
 
 function handleScroll() {
     const scrollBtn = document.querySelector('.scroll-top');
-    if(window.scrollY > 300) {
+    if (!scrollBtn) return;
+    
+    if (window.scrollY > 300) {
         scrollBtn.style.display = 'block';
+        setTimeout(() => {
+            scrollBtn.style.opacity = '1';
+        }, 10);
     } else {
-        scrollBtn.style.display = 'none';
+        scrollBtn.style.opacity = '0';
+        setTimeout(() => {
+            scrollBtn.style.display = 'none';
+        }, 300);
     }
 }
 
 function scrollToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Initialize App
-window.onload = function() {
-    // Common Initialization
-    document.body.innerHTML += `<button class="scroll-top" onclick="scrollToTop()">↑</button>`;
+// 🚀 Initialize App
+window.onload = function () {
+    // Add scroll to top button
+    const scrollBtn = document.createElement('button');
+    scrollBtn.className = 'scroll-top';
+    scrollBtn.innerHTML = '↑';
+    scrollBtn.onclick = scrollToTop;
+    document.body.appendChild(scrollBtn);
+    
+    // Initialize event listeners
     window.addEventListener('scroll', handleScroll);
     
-    // Page Specific Initialization
-    loadQuestion();
+    // Load content
     loadFacts();
-    showDailyFact();
     initializeAnimations();
-};
-
-// FAQ Toggle Functionality
-document.querySelectorAll('.faq-item').forEach(item => {
-    item.querySelector('.question').addEventListener('click', () => {
-        item.classList.toggle('active');
+    loadRandomQuiz();
+    
+    // Add keyboard support
+    document.addEventListener('keydown', (e) => {
+        if (e.key >= '1' && e.key <= '4') {
+            const index = parseInt(e.key) - 1;
+            const optionButtons = document.querySelectorAll('.option');
+            if (optionButtons.length > index && optionButtons[index] && !optionButtons[index].disabled) {
+                optionButtons[index].click();
+            }
+        }
     });
-});
+};
